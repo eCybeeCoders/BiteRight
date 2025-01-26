@@ -384,16 +384,16 @@
         </div>
     </div>
     
-
 <script>
 
 const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
 
 if (!apiKey) {
     console.error("API Key is missing or undefined.");
+} else {
+    console.log("API Key Loaded:", apiKey);
 }
 
-console.log("API Key: ", apiKey); // This will log `undefined` in production for security reasons.
 
 let weekStartDate = null; // Declare globally for accessibility
 
