@@ -386,14 +386,13 @@
     
 <script>
 
-const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
+const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
 
 if (!apiKey) {
     console.error("API Key is missing or undefined.");
 } else {
     console.log("API Key Loaded:", apiKey);
 }
-
 
 let weekStartDate = null; // Declare globally for accessibility
 
