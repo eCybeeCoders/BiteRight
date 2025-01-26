@@ -385,14 +385,15 @@
     </div>
     
 <script>
-
-const apiKey = "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";
-
+ window.openAIKey = window.openAIKey = process.env.OPENAI_KEY;  // Replace this with your actual API key
+</script>
+<script>
+ const apiKey = window.openAIKey;
 if (!apiKey) {
     console.error("API Key is missing or undefined.");
-} else {
-    console.log("API Key Loaded:", apiKey);
 }
+
+console.log("API Key: ", openAIKey);
 
 let weekStartDate = null; // Declare globally for accessibility
 
@@ -407,33 +408,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-x
-       
-    function getUserPreferences() {
-    // Collect exclusions
-    const exclusions = Array.from(document.querySelectorAll(".exclusion-item.selected")).map((item) => item.textContent);
-
-    // Collect taste preferences
-    const spiceTolerance = document.querySelector(".spice-options span.selected")?.textContent || "3"; // Default to medium
-    const preferredCuisines = document.getElementById("cuisines").value.split(",").map((c) => c.trim());
-    const favoriteFood = document.getElementById("favoriteFood").value;
-
-    // Collect general info
-    const gender = document.querySelector(".gender-options span.selected")?.textContent || "Not specified";
-    const age = document.getElementById("age").value || "Unknown";
-    const height = document.getElementById("height").value || "Unknown";
-    const weight = document.getElementById("weight").value || "Unknown";
-
-    return {
-        exclusions,
-        spiceTolerance: parseInt(spiceTolerance, 10),
-        preferredCuisines,
-        favoriteFood,
-        generalInfo: { gender, age, height, weight },
-    };
-}
-
-   const exclusions = {
+const exclusions = {
     vegan: ["Red Meat", "Beef", "Pork/Bacon", "Lamb", "Veal", "Poultry", "Chicken", "Turkey", "Fish", "Salmon", "Tuna", "Tilapia", "Sardines","Trout & Snapper", "Shellfish", "Eggs", "Mayo", "Honey", "Non - Kosher Meats"],
     vegetarian: ["Red Meat", "Beef", "Pork/Bacon", "Lamb", "Veal", "Poultry", "Chicken", "Turkey", "Fish", "Salmon", "Tuna", "Tilapia", "Sardines","Trout & Snapper", "Shellfish" ,"Non - Kosher Meats"],
     kosher: ["Pork", "Shellfish", "Non - Kosher Meats"],
@@ -464,6 +439,32 @@ const exclusionCategories = {
 
   
 };
+       
+    function getUserPreferences() {
+    // Collect exclusions
+    const exclusions = Array.from(document.querySelectorAll(".exclusion-item.selected")).map((item) => item.textContent);
+
+    // Collect taste preferences
+    const spiceTolerance = document.querySelector(".spice-options span.selected")?.textContent || "3"; // Default to medium
+    const preferredCuisines = document.getElementById("cuisines").value.split(",").map((c) => c.trim());
+    const favoriteFood = document.getElementById("favoriteFood").value;
+
+    // Collect general info
+    const gender = document.querySelector(".gender-options span.selected")?.textContent || "Not specified";
+    const age = document.getElementById("age").value || "Unknown";
+    const height = document.getElementById("height").value || "Unknown";
+    const weight = document.getElementById("weight").value || "Unknown";
+
+    return {
+        exclusions,
+        spiceTolerance: parseInt(spiceTolerance, 10),
+        preferredCuisines,
+        favoriteFood,
+        generalInfo: { gender, age, height, weight },
+    };
+}
+
+   
 function showSection(section) {
     document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
     document.querySelector(`.${section}`).style.display = 'block';
