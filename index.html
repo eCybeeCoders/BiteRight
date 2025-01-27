@@ -391,16 +391,6 @@ let weekStartDate = null; // Declare globally for accessibility
 
 let weekOffset = 0; // Declare this at the top of your script
 
- function showSection(section) {
-    document.querySelectorAll(".section").forEach((sec) => (sec.style.display = "none"));
-    const targetSection = document.querySelector(`.${section}`);
-    if (targetSection) {
-        targetSection.style.display = "block";
-    } else {
-        console.error(`Section ${section} not found!`);
-    }
-};
-
     
 // Place at the top of your script, but after global variables
 function selectDiet(diet) {
@@ -446,16 +436,15 @@ function selectDiet(diet) {
     } else {
         console.error("Exclusion categories are not defined.");
     }
-};
+}
 
-
-    
-document.addEventListener("DOMContentLoaded", () => {
-    const calendarContainer = document.getElementById('calendar-container');
-    if (!calendarContainer) {
-        console.error("calendar-container is missing from the DOM!");
+function showSection(section) {
+    document.querySelectorAll(".section").forEach((sec) => (sec.style.display = "none"));
+    const targetSection = document.querySelector(`.${section}`);
+    if (targetSection) {
+        targetSection.style.display = "block";
     } else {
-        console.log("calendar-container found!");
+        console.error(`Section ${section} not found!`);
     }
 };
     
@@ -490,6 +479,17 @@ const exclusionCategories = {
 
   
 };
+    
+    
+document.addEventListener("DOMContentLoaded", () => {
+    const calendarContainer = document.getElementById('calendar-container');
+    if (!calendarContainer) {
+        console.error("calendar-container is missing from the DOM!");
+    } else {
+        console.log("calendar-container found!");
+    };
+
+    
        
     function getUserPreferences() {
     // Collect exclusions
@@ -991,10 +991,10 @@ function closeModal() {
     const spiceLevel = document.getElementById('meal-spice').value || "3";
 
     if (!mood) {
-        alert('Please provide a mood or cuisine preference!');
-        return;
-    }
-       
+    alert('Please provide a mood or cuisine preference!');
+    return; // Correctly close the `if` block
+}
+  
     const userPreferences = getUserPreferences();
     const prompt = `
         Generate a ${mealTypeToRegenerate} meal based on the following preferences:
