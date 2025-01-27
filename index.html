@@ -230,7 +230,6 @@
         }
 </style>
 
-    </style>
 </head>
 <body>
     <header>
@@ -353,7 +352,8 @@
         <label for="dinner-feedback">Dinner:</label>
         <input type="text" id="dinner-feedback" placeholder="Feedback for dinner...">
     </div>
-   
+  </main>
+ 
 <!--recipe page-->
     <div class="recipe-page" id="recipe-page">
         <h2 id="recipe-title">Recipe Title</h2>
@@ -789,8 +789,8 @@ async function generateMealPlan(date, userPreferences) {
     }
 }
 
-const cachedMealPlan = localStorage.getItem(`${weekStartDate}`);
-console.log("Cached Meal Plan Retrieved:", cachedMealPlan);
+//const cachedMealPlan = localStorage.getItem(`${weekStartDate}`);
+//console.log("Cached Meal Plan Retrieved:", cachedMealPlan);
 
 // Show the recipe page
 async function showRecipe(mealName) {
@@ -994,7 +994,6 @@ function closeModal() {
     alert('Please provide a mood or cuisine preference!');
     return; // Correctly close the `if` block
   }
-}
   
     const userPreferences = getUserPreferences();
     const prompt = `
