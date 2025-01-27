@@ -976,17 +976,16 @@ function closeModal() {
 }
 
 
-async function regenerateMeal() {
-    const mood = document.getElementById('meal-mood').value || "any";
+
+   async function regenerateMeal() {
+
+       const mood = document.getElementById('meal-mood').value || "any";
     const spiceLevel = document.getElementById('meal-spice').value || "3";
 
     if (!mood) {
         alert('Please provide a mood or cuisine preference!');
         return;
-    }
-
-    // Fetch user preferences
-   async function regenerateMeal() {
+        
     const userPreferences = getUserPreferences();
     const prompt = `
         Generate a ${mealTypeToRegenerate} meal based on the following preferences:
