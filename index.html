@@ -478,7 +478,7 @@ const exclusionCategories = {
     "Non - Kosher Meats": ["Non - Kosher Meats"],
 
   
-};
+}
     
     
 document.addEventListener("DOMContentLoaded", () => {
@@ -487,7 +487,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("calendar-container is missing from the DOM!");
     } else {
         console.log("calendar-container found!");
-    };
+    }
 
     
        
@@ -987,12 +987,13 @@ function closeModal() {
 
    async function regenerateMeal() {
 
-       const mood = document.getElementById('meal-mood').value || "any";
+    const mood = document.getElementById('meal-mood').value || "any";
     const spiceLevel = document.getElementById('meal-spice').value || "3";
 
     if (!mood) {
     alert('Please provide a mood or cuisine preference!');
     return; // Correctly close the `if` block
+  }
 }
   
     const userPreferences = getUserPreferences();
