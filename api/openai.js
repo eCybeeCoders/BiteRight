@@ -1,18 +1,33 @@
 export default async function handler(req, res) {
-    const { prompt } = req.body;
+    const { prompt, imageGeneration, n, size } = req.body;
 
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.OPENAI_KEY}`,
-        },
-        body: JSON.stringify({
-            model: "gpt-3.5-turbo",
-            messages: [{ role: "user", content: prompt }],
-        }),
-    });
+    try {
+        const apiUrl = imageGeneration
+            ? "https://api.openai.com/v1/images/generations"
+            : "https://api.openai.com/v1/chat/completions";
 
-    const data = await response.json();
-    res.status(200).json(data);
+        const response = await fetch(apiUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${process.env.OPENAI_KEY}`,
+            },
+            body: JSON.stringify(
+                imageGeneration
+                    ? { prompt, n, size }
+                    : {
+                          model: "gpt-3.5-turbo",
+                          messages: [{ role: "user", content: prompt }],
+                          max_tokens: 500,
+                      }
+            ),
+        });
+
+        const data = await response.json();
+        res.status(200).json(data);
+    } catch (error) {
+        console.error("Error in serverless function:", error);
+        res.status(500).json({ error: "Failed to process the request" });
+    }
 }
+
