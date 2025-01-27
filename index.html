@@ -397,8 +397,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("calendar-container is missing from the DOM!");
     } else {
         console.log("calendar-container found!");
-    }
-});
+    };
 
 const exclusions = {
     vegan: ["Red Meat", "Beef", "Pork/Bacon", "Lamb", "Veal", "Poultry", "Chicken", "Turkey", "Fish", "Salmon", "Tuna", "Tilapia", "Sardines","Trout & Snapper", "Shellfish", "Eggs", "Mayo", "Honey", "Non - Kosher Meats"],
@@ -454,13 +453,18 @@ const exclusionCategories = {
         favoriteFood,
         generalInfo: { gender, age, height, weight },
     };
-}
 
-   
-function showSection(section) {
-    document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
-    document.querySelector(`.${section}`).style.display = 'block';
-}
+
+    function showSection(section) {
+    document.querySelectorAll(".section").forEach((sec) => (sec.style.display = "none"));
+    const targetSection = document.querySelector(`.${section}`);
+    if (targetSection) {
+        targetSection.style.display = "block";
+    } else {
+        console.error(`Section ${section} not found!`);
+    }
+};
+
 
 // Place at the top of your script, but after global variables
 function selectDiet(diet) {
@@ -506,13 +510,13 @@ function selectDiet(diet) {
     } else {
         console.error("Exclusion categories are not defined.");
     }
-}
+};
 
     
 function goToMealPlan() {
     showSection('meal-plan-section');
     populateCalendar(); // Populate the calendar when navigating to the meal plan page
-}
+};
 
 // Ensure DOM is fully loaded before running JavaScript
 document.addEventListener("DOMContentLoaded", () => {
