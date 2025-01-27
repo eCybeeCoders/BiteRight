@@ -18,7 +18,7 @@ export default async function handler(req, res) {
                     : {
                           model: "gpt-3.5-turbo",
                           messages: [{ role: "user", content: prompt }],
-                          max_tokens: 500,
+                          max_tokens: maxTokens || 500, // Default to 500 if not provided
                       }
             ),
         });
