@@ -391,14 +391,74 @@ let weekStartDate = null; // Declare globally for accessibility
 
 let weekOffset = 0; // Declare this at the top of your script
 
+ function showSection(section) {
+    document.querySelectorAll(".section").forEach((sec) => (sec.style.display = "none"));
+    const targetSection = document.querySelector(`.${section}`);
+    if (targetSection) {
+        targetSection.style.display = "block";
+    } else {
+        console.error(`Section ${section} not found!`);
+    }
+};
+
+    
+// Place at the top of your script, but after global variables
+function selectDiet(diet) {
+    console.log("Diet selected:", diet);
+
+    // Show the Exclusion Section
+    showSection("exclusion-section");
+
+    // Populate exclusions for the selected diet
+    const exclusionContent = document.getElementById("exclusion-content");
+    exclusionContent.innerHTML = ""; // Clear any existing content
+
+    if (exclusionCategories) {
+        for (const category in exclusionCategories) {
+            const categoryDiv = document.createElement("div");
+            categoryDiv.className = "exclusion-category";
+
+            const title = document.createElement("h3");
+            title.textContent = category;
+            categoryDiv.appendChild(title);
+
+            const list = document.createElement("div");
+            list.className = "exclusion-list";
+
+            exclusionCategories[category].forEach((item) => {
+                const itemDiv = document.createElement("div");
+                itemDiv.textContent = item;
+                itemDiv.className = "exclusion-item";
+
+                // Highlight preselected exclusions
+                if (exclusions[diet]?.includes(item)) {
+                    itemDiv.classList.add("selected");
+                }
+
+                // Toggle selection on click
+                itemDiv.onclick = () => itemDiv.classList.toggle("selected");
+                list.appendChild(itemDiv);
+            });
+
+            categoryDiv.appendChild(list);
+            exclusionContent.appendChild(categoryDiv);
+        }
+    } else {
+        console.error("Exclusion categories are not defined.");
+    }
+};
+
+
+    
 document.addEventListener("DOMContentLoaded", () => {
     const calendarContainer = document.getElementById('calendar-container');
     if (!calendarContainer) {
         console.error("calendar-container is missing from the DOM!");
     } else {
         console.log("calendar-container found!");
-    };
-
+    }
+};
+    
 const exclusions = {
     vegan: ["Red Meat", "Beef", "Pork/Bacon", "Lamb", "Veal", "Poultry", "Chicken", "Turkey", "Fish", "Salmon", "Tuna", "Tilapia", "Sardines","Trout & Snapper", "Shellfish", "Eggs", "Mayo", "Honey", "Non - Kosher Meats"],
     vegetarian: ["Red Meat", "Beef", "Pork/Bacon", "Lamb", "Veal", "Poultry", "Chicken", "Turkey", "Fish", "Salmon", "Tuna", "Tilapia", "Sardines","Trout & Snapper", "Shellfish" ,"Non - Kosher Meats"],
@@ -454,63 +514,10 @@ const exclusionCategories = {
         generalInfo: { gender, age, height, weight },
     };
 
+} // Closing the function properly
 
-    function showSection(section) {
-    document.querySelectorAll(".section").forEach((sec) => (sec.style.display = "none"));
-    const targetSection = document.querySelector(`.${section}`);
-    if (targetSection) {
-        targetSection.style.display = "block";
-    } else {
-        console.error(`Section ${section} not found!`);
-    }
-};
+   
 
-
-// Place at the top of your script, but after global variables
-function selectDiet(diet) {
-    console.log("Diet selected:", diet);
-
-    // Show the Exclusion Section
-    showSection("exclusion-section");
-
-    // Populate exclusions for the selected diet
-    const exclusionContent = document.getElementById("exclusion-content");
-    exclusionContent.innerHTML = ""; // Clear any existing content
-
-    if (exclusionCategories) {
-        for (const category in exclusionCategories) {
-            const categoryDiv = document.createElement("div");
-            categoryDiv.className = "exclusion-category";
-
-            const title = document.createElement("h3");
-            title.textContent = category;
-            categoryDiv.appendChild(title);
-
-            const list = document.createElement("div");
-            list.className = "exclusion-list";
-
-            exclusionCategories[category].forEach((item) => {
-                const itemDiv = document.createElement("div");
-                itemDiv.textContent = item;
-                itemDiv.className = "exclusion-item";
-
-                // Highlight preselected exclusions
-                if (exclusions[diet]?.includes(item)) {
-                    itemDiv.classList.add("selected");
-                }
-
-                // Toggle selection on click
-                itemDiv.onclick = () => itemDiv.classList.toggle("selected");
-                list.appendChild(itemDiv);
-            });
-
-            categoryDiv.appendChild(list);
-            exclusionContent.appendChild(categoryDiv);
-        }
-    } else {
-        console.error("Exclusion categories are not defined.");
-    }
-};
 
     
 function goToMealPlan() {
@@ -986,7 +993,8 @@ function closeModal() {
     if (!mood) {
         alert('Please provide a mood or cuisine preference!');
         return;
-        
+    }
+       
     const userPreferences = getUserPreferences();
     const prompt = `
         Generate a ${mealTypeToRegenerate} meal based on the following preferences:
