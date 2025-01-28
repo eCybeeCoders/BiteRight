@@ -391,8 +391,43 @@ let weekStartDate = null; // Declare globally for accessibility
 
 let weekOffset = 0; // Declare this at the top of your script
 
+    const exclusions = {
+    vegan: ["Red Meat", "Beef", "Pork/Bacon", "Lamb", "Veal", "Poultry", "Chicken", "Turkey", "Fish", "Salmon", "Tuna", "Tilapia", "Sardines","Trout & Snapper", "Shellfish", "Eggs", "Mayo", "Honey", "Non - Kosher Meats"],
+    vegetarian: ["Red Meat", "Beef", "Pork/Bacon", "Lamb", "Veal", "Poultry", "Chicken", "Turkey", "Fish", "Salmon", "Tuna", "Tilapia", "Sardines","Trout & Snapper", "Shellfish" ,"Non - Kosher Meats"],
+    kosher: ["Pork", "Shellfish", "Non - Kosher Meats"],
+    "dairy-free": ["Dairy", "Milk", "Cream", "Cheese", "Yogurt", "Cottage Cheese", "Whey Powder"],
+    "nut-free": ["Fats & Nuts", "Avocado", "Peanuts", "Almonds", "Pecans", "Walnuts", "Tree Nuts"]
+};
+
+const exclusionCategories = {
+    
+    "Common Exclusions": ["Gluten", "Peanuts", "Eggs", "Fish", "Tree Nuts", "Dairy", "Soy", "Shellfish", "Sesame"],
+    Dairy: ["Dairy", "Milk", "Cream", "Cheese", "Yogurt", "Cottage Cheese", "Whey Powder"],
+    Eggs: ["Eggs"], 
+    Grains: ["Grains", "Breakfast Cereals", "Pastas", "Breads", "Rice", "Oatmeal", "Sugar"],
+    Soy: ["Soy", "Tofu", "Soy Milk"],
+    "Red Meat": ["Red Meat", "Beef", "Pork/Bacon", "Lamb", "Veal"], 
+    Poultry: ["Poultry", "Chicken", "Turkey"],
+    Fish: ["Fish", "Salmon", "Tuna", "Tilapia", "Sardines","Trout & Snapper"],
+    Shellfish: ["Shellfish"],
+    Mayo: ["Mayo"],
+    "Fats & Nuts": ["Fats & Nuts", "Avocado", "Peanuts", "Almonds", "Pecans", "Walnuts"],
+    "Tree Nuts": ["Tree Nuts"], 
+    Legumes: ["Legumes", "Peas", "Lentils", "Beans"],
+    Fruits: ["Fruits", "Apples", "Bananas", "Grapes", "Oranges", "Strawberries", "Pineapple", "Blueberries", "Fruit Juice"],
+    Vegetables: ["Vegetables", "Artichoke", "Asparagus", "Beets", "Brocolli", "Carrots", "Sprouts", "Celery", "Peppers", "Tomatoes", "Onion", "Garlic", "Eggplant"],
+    "Starchy Vegetables": ["Starchy Vegetables", "Corn", "Potatoes & Yam"],
+    Honey: ["Honey"],
+    "Non - Kosher Meats": ["Non - Kosher Meats"],
+
+  
+}
+
 // Declare the function globally
 window.selectDiet = function (diet) {
+    console.log("Diet selected:", diet); // Debug the passed diet
+    console.log("Exclusion categories available:", exclusionCategories); // Debug
+    console.log("Exclusion content element:", document.getElementById("exclusion-content")); // Debug
     console.log("Diet selected:", diet);
     showSection("exclusion-section");
     const exclusionContent = document.getElementById("exclusion-content");
@@ -445,37 +480,7 @@ function showSection(section) {
     }
 };
     
-const exclusions = {
-    vegan: ["Red Meat", "Beef", "Pork/Bacon", "Lamb", "Veal", "Poultry", "Chicken", "Turkey", "Fish", "Salmon", "Tuna", "Tilapia", "Sardines","Trout & Snapper", "Shellfish", "Eggs", "Mayo", "Honey", "Non - Kosher Meats"],
-    vegetarian: ["Red Meat", "Beef", "Pork/Bacon", "Lamb", "Veal", "Poultry", "Chicken", "Turkey", "Fish", "Salmon", "Tuna", "Tilapia", "Sardines","Trout & Snapper", "Shellfish" ,"Non - Kosher Meats"],
-    kosher: ["Pork", "Shellfish", "Non - Kosher Meats"],
-    "dairy-free": ["Dairy", "Milk", "Cream", "Cheese", "Yogurt", "Cottage Cheese", "Whey Powder"],
-    "nut-free": ["Fats & Nuts", "Avocado", "Peanuts", "Almonds", "Pecans", "Walnuts", "Tree Nuts"]
-};
 
-const exclusionCategories = {
-    
-    "Common Exclusions": ["Gluten", "Peanuts", "Eggs", "Fish", "Tree Nuts", "Dairy", "Soy", "Shellfish", "Sesame"],
-    Dairy: ["Dairy", "Milk", "Cream", "Cheese", "Yogurt", "Cottage Cheese", "Whey Powder"],
-    Eggs: ["Eggs"],
-    Grains: ["Grains", "Breakfast Cereals", "Pastas", "Breads", "Rice", "Oatmeal", "Sugar"],
-    Soy: ["Soy", "Tofu", "Soy Milk"],
-    "Red Meat": ["Red Meat", "Beef", "Pork/Bacon", "Lamb", "Veal"], 
-    Poultry: ["Poultry", "Chicken", "Turkey"],
-    Fish: ["Fish", "Salmon", "Tuna", "Tilapia", "Sardines","Trout & Snapper"],
-    Shellfish: ["Shellfish"],
-    Mayo: ["Mayo"],
-    "Fats & Nuts": ["Fats & Nuts", "Avocado", "Peanuts", "Almonds", "Pecans", "Walnuts"],
-    "Tree Nuts": ["Tree Nuts"], 
-    Legumes: ["Legumes", "Peas", "Lentils", "Beans"],
-    Fruits: ["Fruits", "Apples", "Bananas", "Grapes", "Oranges", "Strawberries", "Pineapple", "Blueberries", "Fruit Juice"],
-    Vegetables: ["Vegetables", "Artichoke", "Asparagus", "Beets", "Brocolli", "Carrots", "Sprouts", "Celery", "Peppers", "Tomatoes", "Onion", "Garlic", "Eggplant"],
-    "Starchy Vegetables": ["Starchy Vegetables", "Corn", "Potatoes & Yam"],
-    Honey: ["Honey"],
-    "Non - Kosher Meats": ["Non - Kosher Meats"],
-
-  
-}
     
     
 document.addEventListener("DOMContentLoaded", () => {
