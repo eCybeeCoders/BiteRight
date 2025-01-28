@@ -393,50 +393,6 @@ let weekOffset = 0; // Declare this at the top of your script
 
     
 // Place at the top of your script, but after global variables
-function selectDiet(diet) {
-    console.log("Diet selected:", diet);
-
-    // Show the Exclusion Section
-    showSection("exclusion-section");
-
-    // Populate exclusions for the selected diet
-    const exclusionContent = document.getElementById("exclusion-content");
-    exclusionContent.innerHTML = ""; // Clear any existing content
-
-    if (exclusionCategories) {
-        for (const category in exclusionCategories) {
-            const categoryDiv = document.createElement("div");
-            categoryDiv.className = "exclusion-category";
-
-            const title = document.createElement("h3");
-            title.textContent = category;
-            categoryDiv.appendChild(title);
-
-            const list = document.createElement("div");
-            list.className = "exclusion-list";
-
-            exclusionCategories[category].forEach((item) => {
-                const itemDiv = document.createElement("div");
-                itemDiv.textContent = item;
-                itemDiv.className = "exclusion-item";
-
-                // Highlight preselected exclusions
-                if (exclusions[diet]?.includes(item)) {
-                    itemDiv.classList.add("selected");
-                }
-
-                // Toggle selection on click
-                itemDiv.onclick = () => itemDiv.classList.toggle("selected");
-                list.appendChild(itemDiv);
-            });
-
-            categoryDiv.appendChild(list);
-            exclusionContent.appendChild(categoryDiv);
-        }
-    } else {
-        console.error("Exclusion categories are not defined.");
-    }
-}
 
 function showSection(section) {
     document.querySelectorAll(".section").forEach((sec) => (sec.style.display = "none"));
@@ -489,7 +445,49 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("calendar-container found!");
     }
 
-    
+
+    function selectDiet(diet) {
+        console.log("Diet selected:", diet);
+        showSection("exclusion-section");
+        const exclusionContent = document.getElementById("exclusion-content");
+        exclusionContent.innerHTML = ""; // Clear any existing content
+
+        if (exclusionCategories) {
+            for (const category in exclusionCategories) {
+                const categoryDiv = document.createElement("div");
+                categoryDiv.className = "exclusion-category";
+
+                const title = document.createElement("h3");
+                title.textContent = category;
+                categoryDiv.appendChild(title);
+
+                const list = document.createElement("div");
+                list.className = "exclusion-list";
+
+                exclusionCategories[category].forEach((item) => {
+                    const itemDiv = document.createElement("div");
+                    itemDiv.textContent = item;
+                    itemDiv.className = "exclusion-item";
+
+                    // Highlight preselected exclusions
+                    if (exclusions[diet]?.includes(item)) {
+                        itemDiv.classList.add("selected");
+                    }
+
+                    // Toggle selection on click
+                    itemDiv.onclick = () => itemDiv.classList.toggle("selected");
+                    list.appendChild(itemDiv);
+                });
+
+                categoryDiv.appendChild(list);
+                exclusionContent.appendChild(categoryDiv);
+            }
+        } else {
+            console.error("Exclusion categories are not defined.");
+        }
+    }
+
+   
        
     function getUserPreferences() {
     // Collect exclusions
