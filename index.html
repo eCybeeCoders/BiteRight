@@ -237,11 +237,6 @@
             <img src="logo.png" alt="BiteRight Logo">
             <h1>BiteRight</h1>
         </div>
-        <nav>
-            <a href="#" onclick="showSection('diet-selection')">Home</a>
-            <a href="#">How It Works</a>
-            <a href="#">Log In</a>
-        </nav>
     </header>
 
     <!-- Diet Selection Section -->
@@ -249,11 +244,11 @@
         <h2>----Eat Right, No Worry In Sight----</h2>
         <p>Select a preset diet (If your diet isn’t on these presets, you can customize it later.)</p>
         <div class="diet-options">
-            <img src="vegan.png" alt="Vegan" onclick="selectDiet('vegan')">
-            <img src="vegetarian.png" alt="Vegetarian" onclick="selectDiet('vegetarian')">
-            <img src="kosher.png" alt="Kosher" onclick="selectDiet('kosher')">
-            <img src="dairy-free.png" alt="Dairy-Free" onclick="selectDiet('dairy-free')">
-            <img src="nut-free.png" alt="Nut-Free" onclick="selectDiet('nut-free')">
+           <img src="vegan.png" alt="Vegan" data-diet="vegan">
+    <img src="vegetarian.png" alt="Vegetarian" data-diet="vegetarian">
+    <img src="kosher.png" alt="Kosher" data-diet="kosher">
+    <img src="dairy-free.png" alt="Dairy-Free" data-diet="dairy-free">
+    <img src="nut-free.png" alt="Nut-Free" data-diet="nut-free">
         </div>
     </main>
 
@@ -468,6 +463,15 @@ window.selectDiet = function (diet) {
     }
 };
 
+
+    document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".diet-options img").forEach((img) => {
+        img.addEventListener("click", () => {
+            const diet = img.dataset.diet;
+            selectDiet(diet);
+        });
+    });
+});
 // Place at the top of your script, but after global variables
 
 function showSection(section) {
