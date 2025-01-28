@@ -391,7 +391,46 @@ let weekStartDate = null; // Declare globally for accessibility
 
 let weekOffset = 0; // Declare this at the top of your script
 
-    
+       function selectDiet(diet) {
+        console.log("Diet selected:", diet);
+        showSection("exclusion-section");
+        const exclusionContent = document.getElementById("exclusion-content");
+        exclusionContent.innerHTML = ""; // Clear any existing content
+
+        if (exclusionCategories) {
+            for (const category in exclusionCategories) {
+                const categoryDiv = document.createElement("div");
+                categoryDiv.className = "exclusion-category";
+
+                const title = document.createElement("h3");
+                title.textContent = category;
+                categoryDiv.appendChild(title);
+
+                const list = document.createElement("div");
+                list.className = "exclusion-list";
+
+                exclusionCategories[category].forEach((item) => {
+                    const itemDiv = document.createElement("div");
+                    itemDiv.textContent = item;
+                    itemDiv.className = "exclusion-item";
+
+                    // Highlight preselected exclusions
+                    if (exclusions[diet]?.includes(item)) {
+                        itemDiv.classList.add("selected");
+                    }
+
+                    // Toggle selection on click
+                    itemDiv.onclick = () => itemDiv.classList.toggle("selected");
+                    list.appendChild(itemDiv);
+                });
+
+                categoryDiv.appendChild(list);
+                exclusionContent.appendChild(categoryDiv);
+            }
+        } else {
+            console.error("Exclusion categories are not defined.");
+        }
+    }
 // Place at the top of your script, but after global variables
 
 function showSection(section) {
@@ -446,59 +485,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    function selectDiet(diet) {
-        console.log("Diet selected:", diet);
-        showSection("exclusion-section");
-        const exclusionContent = document.getElementById("exclusion-content");
-        exclusionContent.innerHTML = ""; // Clear any existing content
-
-        if (exclusionCategories) {
-            for (const category in exclusionCategories) {
-                const categoryDiv = document.createElement("div");
-                categoryDiv.className = "exclusion-category";
-
-                const title = document.createElement("h3");
-                title.textContent = category;
-                categoryDiv.appendChild(title);
-
-                const list = document.createElement("div");
-                list.className = "exclusion-list";
-
-                exclusionCategories[category].forEach((item) => {
-                    const itemDiv = document.createElement("div");
-                    itemDiv.textContent = item;
-                    itemDiv.className = "exclusion-item";
-
-                    // Highlight preselected exclusions
-                    if (exclusions[diet]?.includes(item)) {
-                        itemDiv.classList.add("selected");
-                    }
-
-                    // Toggle selection on click
-                    itemDiv.onclick = () => itemDiv.classList.toggle("selected");
-                    list.appendChild(itemDiv);
-                });
-
-                categoryDiv.appendChild(list);
-                exclusionContent.appendChild(categoryDiv);
-            }
-        } else {
-            console.error("Exclusion categories are not defined.");
-        }
-    }
+ 
 
    
        
-    function getUserPreferences() {
-    // Collect exclusions
-    const exclusions = Array.from(document.querySelectorAll(".exclusion-item.selected")).map((item) => item.textContent);
+  function getUserPreferences() {
+    const exclusions = Array.from(document.querySelectorAll(".exclusion-item.selected"))
+        .map((item) => item.textContent);
 
-    // Collect taste preferences
-    const spiceTolerance = document.querySelector(".spice-options span.selected")?.textContent || "3"; // Default to medium
+    const spiceTolerance = document.querySelector(".spice-options span.selected")?.textContent || "3";
     const preferredCuisines = document.getElementById("cuisines").value.split(",").map((c) => c.trim());
     const favoriteFood = document.getElementById("favoriteFood").value;
 
-    // Collect general info
     const gender = document.querySelector(".gender-options span.selected")?.textContent || "Not specified";
     const age = document.getElementById("age").value || "Unknown";
     const height = document.getElementById("height").value || "Unknown";
@@ -511,8 +509,7 @@ document.addEventListener("DOMContentLoaded", () => {
         favoriteFood,
         generalInfo: { gender, age, height, weight },
     };
-
-} // Closing the function properly
+}
 
    
 
@@ -987,11 +984,12 @@ function closeModal() {
 
     const mood = document.getElementById('meal-mood').value || "any";
     const spiceLevel = document.getElementById('meal-spice').value || "3";
+       
+if (!mood) {
+        alert('Please provide a mood or cuisine preference!');
+        return; // Correctly close the `if` block
+    }
 
-    if (!mood) {
-    alert('Please provide a mood or cuisine preference!');
-    return; // Correctly close the `if` block
-  }
   
     const userPreferences = getUserPreferences();
     const prompt = `
@@ -1023,9 +1021,7 @@ function closeModal() {
             }),
         });
 
-        if (!response.ok) {
-            throw new Error(`Server responded with status: ${response.status}`);
-        }
+     
 
         const data = await response.json();
         const newMeal = JSON.parse(data.choices[0]?.message?.content || "{}");
