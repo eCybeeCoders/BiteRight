@@ -386,6 +386,8 @@
     
 <script>
 
+    console.log("JavaScript loaded successfully");
+
 
 let weekStartDate = null; // Declare globally for accessibility
 
@@ -423,7 +425,8 @@ const exclusionCategories = {
   
 }
 
-       window.function selectDiet(diet) {
+    
+       function selectDiet(diet) {
         console.log("Diet selected:", diet);
         showSection("exclusion-section");
         const exclusionContent = document.getElementById("exclusion-content");
