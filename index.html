@@ -391,46 +391,48 @@ let weekStartDate = null; // Declare globally for accessibility
 
 let weekOffset = 0; // Declare this at the top of your script
 
- window.function selectDiet(diet) {
-        console.log("Diet selected:", diet);
-        showSection("exclusion-section");
-        const exclusionContent = document.getElementById("exclusion-content");
-        exclusionContent.innerHTML = ""; // Clear any existing content
+// Declare the function globally
+window.selectDiet = function (diet) {
+    console.log("Diet selected:", diet);
+    showSection("exclusion-section");
+    const exclusionContent = document.getElementById("exclusion-content");
+    exclusionContent.innerHTML = ""; // Clear any existing content
 
-        if (exclusionCategories) {
-            for (const category in exclusionCategories) {
-                const categoryDiv = document.createElement("div");
-                categoryDiv.className = "exclusion-category";
+    if (exclusionCategories) {
+        for (const category in exclusionCategories) {
+            const categoryDiv = document.createElement("div");
+            categoryDiv.className = "exclusion-category";
 
-                const title = document.createElement("h3");
-                title.textContent = category;
-                categoryDiv.appendChild(title);
+            const title = document.createElement("h3");
+            title.textContent = category;
+            categoryDiv.appendChild(title);
 
-                const list = document.createElement("div");
-                list.className = "exclusion-list";
+            const list = document.createElement("div");
+            list.className = "exclusion-list";
 
-                exclusionCategories[category].forEach((item) => {
-                    const itemDiv = document.createElement("div");
-                    itemDiv.textContent = item;
-                    itemDiv.className = "exclusion-item";
+            exclusionCategories[category].forEach((item) => {
+                const itemDiv = document.createElement("div");
+                itemDiv.textContent = item;
+                itemDiv.className = "exclusion-item";
 
-                    // Highlight preselected exclusions
-                    if (exclusions[diet]?.includes(item)) {
-                        itemDiv.classList.add("selected");
-                    }
+                // Highlight preselected exclusions
+                if (exclusions[diet]?.includes(item)) {
+                    itemDiv.classList.add("selected");
+                }
 
-                    // Toggle selection on click
-                    itemDiv.onclick = () => itemDiv.classList.toggle("selected");
-                    list.appendChild(itemDiv);
-                });
+                // Toggle selection on click
+                itemDiv.onclick = () => itemDiv.classList.toggle("selected");
+                list.appendChild(itemDiv);
+            });
 
-                categoryDiv.appendChild(list);
-                exclusionContent.appendChild(categoryDiv);
-            }
-        } else {
-            console.error("Exclusion categories are not defined.");
+            categoryDiv.appendChild(list);
+            exclusionContent.appendChild(categoryDiv);
         }
+    } else {
+        console.error("Exclusion categories are not defined.");
     }
+};
+
 // Place at the top of your script, but after global variables
 
 function showSection(section) {
